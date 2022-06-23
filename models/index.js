@@ -32,7 +32,10 @@ const User = db.define('user', {
   }
 })
 
-
+Page.beforeValidate((title) => {
+  const slug = title.replace(/\s+/g, '_').replace(/\W/g, '');
+  return slug
+})
 
 
 
