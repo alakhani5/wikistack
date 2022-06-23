@@ -3,16 +3,22 @@ const morgan = require('morgan')
 const html = require("html-template-tag");
 const layout = require('./views/layout')
 const {db, Page, User} = require('./models/index')
+const userRouter = require('./routes/users')
+const wikiRouter = require('./routes/wiki')
 
 const app = express()
 
 app.use(morgan('dev'))
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended: false}))
+app.use('/wiki', wikiRouter);
+app.use('/user', userRouter);
+
 
 app.get('/', (req,res) => {
-  res.send(layout(''))
+  res.redirect('/wiki')
 })
+
 
 PORT = 1337
 
