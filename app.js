@@ -1,35 +1,21 @@
-const express = require('express')
-const morgan = require('morgan')
-const html = require("html-template-tag");
-const layout = require('./views/layout')
-const {db, Page, User} = require('./models/index')
-const userRouter = require('./routes/users')
-const wikiRouter = require('./routes/wiki')
+const express = require("express");
+const app = express();
+const morgan = require("morgan");
+const path = require("path");
 
-const app = express()
-
-app.use(morgan('dev'))
-app.use(express.static(__dirname + "/public"));
-app.use(express.urlencoded({extended: false}))
-app.use('/wiki', wikiRouter);
-app.use('/user', userRouter);
-
-
-app.get('/', (req,res) => {
-  res.redirect('/wiki')
-})
+app.use(morgan("dev")); //logging middleware
+app.use(express.static(path.join(__dirname, "./public"))); //serving up static files (e.g. css files)
+app.use(express.urlencoded({ extended: false })); //parsing middleware for form input data
+app.use(express.json());
+app.use(require('method-override')('_method'));
 
 
 
-PORT = 1337
+app.use("/wiki", require("./routes/wiki"));
+app.use("/users", require("./routes/users"));
 
-const init = async () => {
-  await db.sync({force: true});
-  // make sure that you have a PORT constant
-  app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}!`);
-  });
-}
+app.get("/", function (req, res) {
+  res.redirect("/wiki/");
+});
 
-init();
-
+module.exports = app;

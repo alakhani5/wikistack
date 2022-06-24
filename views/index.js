@@ -1,9 +1,9 @@
-const addPage = require("./addPage");
-const editPage = require("./editPage");
+const layout = require("./layout");
+const addPage = require("./addpage");
+const editPage = require("./editpage");
 const main = require("./main");
-const userList = require("./userList");
-const userPages = require("./userPages");
-const wikiPage = require("./wikiPage");
-const layout = require('./layout')
+const userList = require("./userlist");
+const userPages = require("./userpages");
+const wikiPage = require("./wikipage");
 
-module.exports = { addPage, editPage, main, userList, userPages, wikiPage, layout };
+module.exports = { layout, addPage, editPage, main, userList, userPages, wikiPage };
